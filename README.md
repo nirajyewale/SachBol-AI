@@ -1,8 +1,3 @@
-Absolutely! Here is a **cleaned, polished, GitHub-ready README.md** version of your SachBol AI documentation — formatted professionally, consistent, and optimized for visibility on GitHub.
-
-You can **copy–paste this directly into your GitHub repo** as `README.md`.
-
----
 
 # 🛰️ SachBol AI – Agentic Fake News Detector
 
@@ -314,17 +309,3 @@ For help:
 
 ---
 
-## ⭐ If you like this project…
-
-**Give the repository a star!** ⭐
-It helps with hackathon scoring and visibility.
-
----
-
-If you want, I can also:
-
-✅ Add a **GitHub banner image**
-✅ Add **badges** (Python version, MIT License, Build Passing, API Powered)
-✅ Create a **CONTRIBUTING.md**, **LICENSE**, or **project logo**
-
-Just tell me!
