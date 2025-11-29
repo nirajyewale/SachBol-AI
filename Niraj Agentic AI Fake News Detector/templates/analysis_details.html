@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailed Analysis - SachBol AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/analysis.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>SachBol AI</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="/human-review"><i class="fas fa-user-check"></i> Human Review</a></li>
+                <li><a href="/analysis"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="/analysis/claims"><i class="fas fa-list"></i> All Claims</a></li>
+                <li><a href="/analysis/insights"><i class="fas fa-lightbulb"></i> All Insights</a></li>
+                <li><a href="/analysis/sources"><i class="fas fa-newspaper"></i> Sources Analysis</a></li>
+                <li><a href="/"><i class="fas fa-arrow-left"></i> Back to Home</a></li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h2>Detailed Claims Analysis</h2>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="time-period">Time Period</label>
+                        <select id="time-period">
+                            <option value="7d">Last 7 days</option>
+                            <option value="30d" selected>Last 30 days</option>
+                            <option value="90d">Last 90 days</option>
+                            <option value="1y">Last year</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="category">Category</label>
+                        <select id="category">
+                            <option value="all">All Categories</option>
+                            <option value="politics">Politics</option>
+                            <option value="health">Health</option>
+                            <option value="technology">Technology</option>
+                            <option value="finance">Finance</option>
+                            <option value="entertainment">Entertainment</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option value="all">All Status</option>
+                            <option value="verified">Verified</option>
+                            <option value="false">False</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" id="applyFilters">Apply Filters</button>
+                    <button class="btn btn-outline" id="exportData">Export Report</button>
+                </div>
+            </div>
+
+            <!-- Detailed Content -->
+            <div class="content-grid">
+                <div class="chart-container">
+                    <div class="section-header">
+                        <h3>Claims Timeline Analysis</h3>
+                        <div class="view-actions">
+                            <button class="btn btn-outline" id="toggleChartView">
+                                <i class="fas fa-exchange-alt"></i> Switch View
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="detailedTrendsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="stats-grid-detailed">
+                    <div class="stat-card detailed">
+                        <div class="stat-icon icon-false">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="falseClaimsRate">72%</h3>
+                            <p>False Claims Rate</p>
+                            <div class="trend-indicator up">
+                                <i class="fas fa-arrow-up"></i> 5.2% from last month
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card detailed">
+                        <div class="stat-icon icon-verified">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="avgVerificationTime">42m</h3>
+                            <p>Avg Verification Time</p>
+                            <div class="trend-indicator down">
+                                <i class="fas fa-arrow-down"></i> 12% improvement
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card detailed">
+                        <div class="stat-icon icon-trends">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalReach">2.1M</h3>
+                            <p>Total Estimated Reach</p>
+                            <div class="trend-indicator up">
+                                <i class="fas fa-arrow-up"></i> 15% increase
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Claims Table -->
+                <div class="data-container detailed">
+                    <div class="section-header">
+                        <h3>Detailed Claims Analysis</h3>
+                        <div class="table-actions">
+                            <button class="btn btn-outline" id="toggleColumns">
+                                <i class="fas fa-columns"></i> Customize Columns
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table detailed">
+                            <thead>
+                                <tr>
+                                    <th>Claim</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Source</th>
+                                    <th>Reach</th>
+                                    <th>Verification Time</th>
+                                    <th>Impact Score</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detailedClaimsTable">
+                                <!-- Detailed claims will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="footer">
+                <p>SachBol AI &copy; 2025 | Real-time Misinformation Detection System</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/analysis_details.js') }}"></script>
+</body>
+</html>

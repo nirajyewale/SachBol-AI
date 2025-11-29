@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Review - SachBol AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/human_review.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>SachBol AI</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="/human-review" class="active"><i class="fas fa-user-check"></i> Human Review</a></li>
+                <li><a href="/analysis"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="/analysis/claims"><i class="fas fa-list"></i> All Claims</a></li>
+                <li><a href="/"><i class="fas fa-arrow-left"></i> Back to Home</a></li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h2>Human Review Interface</h2>
+            </div>
+            
+            <!-- Crisis Panel -->
+            <div class="crisis-panel">
+                <div class="section-header">
+                    <h3 style="color: white; margin: 0;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Active Crisis Monitoring
+                    </h3>
+                    <a href="#" id="viewAllAlertsBtn" style="color: white;">View All Alerts <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="crisis-stats" id="crisisStats">
+                    <!-- Crisis stats will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon icon-pending">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="pendingReviewCount">156</h3>
+                        <p>Pending Review</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-reviewed">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="reviewedCount">1,247</h3>
+                        <p>Claims Reviewed</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-disputed">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="disputedCount">89</h3>
+                        <p>AI Assessments Disputed</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-accuracy">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="accuracyRate">94%</h3>
+                        <p>Reviewer Accuracy</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Content Grid -->
+            <div class="content-grid">
+                <!-- Left Column -->
+                <div>
+                    <!-- Review Container -->
+                    <div class="review-container">
+                        <div class="section-header">
+                            <h3>Claims for Review</h3>
+                            <a href="#" id="viewQueueBtn">View Queue <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        
+                        <div id="reviewItems">
+                            <!-- Review items will be populated by JavaScript -->
+                        </div>
+                        
+                        <div class="pagination">
+                            <button class="btn" id="prevBtn"><i class="fas fa-chevron-left"></i> Previous</button>
+                            <span style="margin: 0 1rem;">Page <span id="currentPage">1</span> of <span id="totalPages">5</span></span>
+                            <button class="btn" id="nextBtn">Next <i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column -->
+                <div>
+                    <!-- Guidelines Container -->
+                    <div class="guidelines-container">
+                        <div class="section-header">
+                            <h3>Review Guidelines</h3>
+                            <a href="#" id="fullGuideBtn">Full Guide <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <ul class="guidelines-list">
+                            <li class="guideline-item">
+                                <div class="guideline-title">Verify Sources</div>
+                                <div class="guideline-content">Always check multiple reliable sources before making a determination.</div>
+                            </li>
+                            <li class="guideline-item">
+                                <div class="guideline-title">Context Matters</div>
+                                <div class="guideline-content">Consider the full context of the claim, not just the isolated statement.</div>
+                            </li>
+                            <li class="guideline-item">
+                                <div class="guideline-title">Be Objective</div>
+                                <div class="guideline-content">Set aside personal biases when evaluating claims.</div>
+                            </li>
+                            <li class="guideline-item">
+                                <div class="guideline-title">Document Reasoning</div>
+                                <div class="guideline-content">Briefly note your reasoning for disputed AI assessments.</div>
+                            </li>
+                            <li class="guideline-item">
+                                <div class="guideline-title">Crisis Priority</div>
+                                <div class="guideline-content">Crisis-related claims require immediate attention. Verify against official sources (WHO, government, emergency services).</div>
+                            </li>
+                            <li class="guideline-item">
+                                <div class="guideline-title">Harm Prevention</div>
+                                <div class="guideline-content">False crisis information can cause panic. Prioritize accuracy and clear communication.</div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- History Container -->
+                    <div class="history-container" style="margin-top: 1.5rem;">
+                        <div class="section-header">
+                            <h3>Recent Reviews</h3>
+                            <a href="#" id="viewAllHistoryBtn">View All <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <ul class="history-list" id="historyList">
+                            <!-- History items will be populated by JavaScript -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="footer">
+                <p>SachBol AI &copy; 2025 | Real-time Misinformation Detection System</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/human_review.js') }}"></script>
+</body>
+</html>

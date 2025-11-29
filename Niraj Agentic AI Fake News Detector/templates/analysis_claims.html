@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Claims - SachBol AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/analysis.css') }}">
+    <style>
+        .claims-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+        
+        .page-info {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>SachBol AI</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="/human-review"><i class="fas fa-user-check"></i> Human Review</a></li>
+                <li><a href="/analysis"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="/analysis/details"><i class="fas fa-chart-bar"></i> Detailed Analysis</a></li>
+                <li><a href="/analysis/claims" class="active"><i class="fas fa-list"></i> All Claims</a></li>
+                <li><a href="/analysis/insights"><i class="fas fa-lightbulb"></i> All Insights</a></li>
+                <li><a href="/"><i class="fas fa-arrow-left"></i> Back to Home</a></li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="claims-header">
+                <h2>All Claims Database</h2>
+            </div>
+
+            <!-- Search and Filter Section -->
+            <div class="filter-section">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search claims...">
+                    <button class="btn btn-primary" id="searchBtn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="time-period">Time Period</label>
+                        <select id="time-period">
+                            <option value="all">All Time</option>
+                            <option value="7d">Last 7 days</option>
+                            <option value="30d">Last 30 days</option>
+                            <option value="90d">Last 90 days</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="category">Category</label>
+                        <select id="category">
+                            <option value="all">All Categories</option>
+                            <option value="politics">Politics</option>
+                            <option value="health">Health</option>
+                            <option value="technology">Technology</option>
+                            <option value="finance">Finance</option>
+                            <option value="entertainment">Entertainment</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option value="all">All Status</option>
+                            <option value="verified">Verified</option>
+                            <option value="false">False</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="sort">Sort By</label>
+                        <select id="sort">
+                            <option value="date_desc">Newest First</option>
+                            <option value="date_asc">Oldest First</option>
+                            <option value="confidence_desc">High Confidence</option>
+                            <option value="confidence_asc">Low Confidence</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" id="applyFilters">Apply Filters</button>
+                    <button class="btn btn-outline" id="resetFilters">Reset</button>
+                    <button class="btn btn-outline" id="exportAllData">
+                        <i class="fas fa-download"></i> Export All
+                    </button>
+                </div>
+            </div>
+
+            <!-- Claims Table -->
+            <div class="data-container">
+                <div class="section-header">
+                    <h3>Claims Database (<span id="totalClaims">0</span> records)</h3>
+                    <div class="view-actions">
+                        <button class="btn btn-outline" id="toggleView">
+                            <i class="fas fa-th"></i> Card View
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table" id="allClaimsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Claim Text</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Confidence</th>
+                                <th>Source</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="claimsTableBody">
+                            <!-- Claims will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="btn btn-outline" id="prevPage">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <span class="page-info">Page <span id="currentPage">1</span> of <span id="totalPages">1</span></span>
+                    <button class="btn btn-outline" id="nextPage">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="footer">
+                <p>SachBol AI &copy; 2025 | Real-time Misinformation Detection System</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/analysis_claims.js') }}"></script>
+</body>
+</html>

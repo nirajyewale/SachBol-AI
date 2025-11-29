@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SachBol AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>TruthGuard AI</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/dashboard" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="/human-review"><i class="fas fa-user-check"></i> Human Review</a></li>
+                <li><a href="/analysis"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="/"><i class="fas fa-arrow-left"></i> Back to Home</a></li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h2>Misinformation Detection Dashboard</h2>
+            </div>
+            
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon icon-verified">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="verifiedCount">1,247</h3>
+                        <p>Claims Verified</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-false">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="falseCount">892</h3>
+                        <p>False Claims Detected</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-pending">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="pendingCount">156</h3>
+                        <p>Pending Review</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-trends">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="trendsCount">24</h3>
+                        <p>Emerging Trends</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Crisis Alert Panel -->
+            <div class="crisis-panel" id="crisisPanel" style="display: none;">
+                <div class="alert-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Crisis Misinformation Alert</h3>
+                </div>
+                <div class="alert-content">
+                    <p id="crisisClaim"></p>
+                    <div class="alert-actions">
+                        <button class="btn btn-emergency">Issue Correction</button>
+                        <button class="btn btn-secondary">More Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="content-grid">
+                <!-- Left Column -->
+                <div>
+                    <!-- Chart Container -->
+                    <div class="chart-container">
+                        <div class="section-header">
+                            <h3>Claims Analysis</h3>
+                            <a href="/analysis">View Details <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="claimsChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Updates Container -->
+                    <div class="updates-container" style="margin-top: 1.5rem;">
+                        <div class="section-header">
+                            <h3>Recent Updates</h3>
+                            <a href="#">View All <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <ul class="updates-list" id="updatesList">
+                            <!-- Updates will be populated by JavaScript -->
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Right Column -->
+                <div>
+                    <!-- Trends Container -->
+                    <div class="trends-container">
+                        <div class="section-header">
+                            <h3>Emerging Trends</h3>
+                            <a href="/analysis">View All <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <ul class="trends-list" id="trendsList">
+                            <!-- Trends will be populated by JavaScript -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="footer">
+                <p>TruthGuard AI &copy; 2025 | Real-time Misinformation Detection System</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

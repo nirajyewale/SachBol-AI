@@ -1,0 +1,11 @@
+
+gradio
+elevenlabs
+flask==2.3.3
+flask-socketio==5.3.6
+python-socketio==5.8.0
+httpx==0.24.1
+python-dotenv==1.0.0
+sqlite3
+pillow==10.0.1
+pytesseract==0.3.10

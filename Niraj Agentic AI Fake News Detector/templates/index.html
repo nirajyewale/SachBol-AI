@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SachBol AI - Combat Misinformation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>SachBol AI</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/human-review">Human Review</a></li>
+                <li><a href="/analysis">Analytics</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="/dashboard" class="btn btn-primary">Access Dashboard</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2>Combat Misinformation with AI-Powered Verification</h2>
+                <p>SachBol AI uses advanced multimodal analysis to detect, verify, and track misinformation in real-time across multiple platforms and content types.</p>
+                <div class="hero-buttons">
+                    <a href="#demo" class="btn btn-primary">Try Demo</a>
+                    <a href="/dashboard" class="btn btn-outline" style="color: white; border-color: white;">View Dashboard</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image-placeholder">
+                    <i class="fas fa-search"></i>
+                    <h3>Real-time Misinformation Detection</h3>
+                    <p>Analyzing text, images, and social media content</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>Powerful Features to Fight Misinformation</h2>
+            <p>Our advanced AI system provides comprehensive tools to identify and counter false information</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon analyze">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Multimodal Analysis</h3>
+                <p>Extract claims from text, images, and social media posts using state-of-the-art AI models that understand context and nuance.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon verify">
+                    <i class="fas fa-check-double"></i>
+                </div>
+                <h3>Real-time Verification</h3>
+                <p>Automatically verify claims against trusted sources and fact-checking databases with our advanced verification engine.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon track">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Trend Detection</h3>
+                <p>Identify emerging misinformation patterns and track their spread across platforms to enable proactive response.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo" id="demo">
+        <div class="demo-container">
+            <div class="demo-header">
+                <h2>Try Our Claim Verification Demo</h2>
+                <p>Enter any text claim below to see how SachBol AI analyzes and verifies information</p>
+            </div>
+            <div class="demo-input">
+                <textarea id="claimInput" placeholder="Enter a claim to verify (e.g., 'The Earth is flat' or 'Vaccines cause autism')"></textarea>
+                <button id="analyzeBtn" class="btn btn-primary" style="width: 100%;">Analyze Claim</button>
+            </div>
+            <div class="loading" id="loadingIndicator">
+                <div class="spinner"></div>
+                <p>Analyzing claim...</p>
+            </div>
+            <div class="demo-result" id="demoResult">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>25,847</h3>
+                <p>Claims Analyzed</p>
+            </div>
+            <div class="stat-item">
+                <h3>14,592</h3>
+                <p>False Claims Detected</p>
+            </div>
+            <div class="stat-item">
+                <h3>92.3%</h3>
+                <p>Accuracy Rate</p>
+            </div>
+            <div class="stat-item">
+                <h3>247</h3>
+                <p>Emerging Trends Identified</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Ready to Combat Misinformation?</h2>
+            <p>Join organizations worldwide using SachBol AI to protect their communities from false information</p>
+            <div class="cta-buttons">
+                <a href="/dashboard" class="btn btn-light">Access Dashboard</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>SachBol AI</h3>
+                <p>Advanced AI-powered misinformation detection and verification platform.</p>
+                <div style="margin-top: 1.5rem;">
+                    <a href="https://x.com/@MagicalMayhem_1" target="_blank" style="color: white; margin-right: 1rem; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/in/jinit-yadav-5b300a2b3/" target="_blank" style="color: white; margin-right: 1rem; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/Jinit-Yadav" target="_blank" style="color: white; margin-right: 1rem; font-size: 1.2rem;"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/human-review">Human Review</a></li>
+                    <li><a href="/analysis">Analytics</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources & References</h3>
+                <ul class="footer-links">
+                    <li><a href="https://www.python.org/" target="_blank">Python Programming</a></li>
+                    <li><a href="https://flask.palletsprojects.com/" target="_blank">Flask Framework</a></li>
+                    <li><a href="https://pytorch.org/" target="_blank">PyTorch</a></li>
+                    <li><a href="https://huggingface.co/transformers/" target="_blank">Hugging Face Transformers</a></li>
+                    <li><a href="https://www.tensorflow.org/" target="_blank">TensorFlow</a></li>
+                    <li><a href="https://spacy.io/" target="_blank">spaCy NLP</a></li>
+                    <li><a href="https://www.snopes.com/" target="_blank">Snopes Fact-Checking</a></li>
+                    <li><a href="https://www.poynter.org/ifcn/" target="_blank">International Fact-Checking Network</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Research & Data</h3>
+                <ul class="footer-links">
+                    <li><a href="https://arxiv.org/" target="_blank">arXiv Research Papers</a></li>
+                    <li><a href="https://paperswithcode.com/" target="_blank">Papers with Code</a></li>
+                    <li><a href="https://www.kaggle.com/" target="_blank">Kaggle Datasets</a></li>
+                    <li><a href="https://github.com/topics/misinformation-detection" target="_blank">Misinformation Detection</a></li>
+                    <li><a href="https://github.com/topics/fact-checking" target="_blank">Fact-Checking Tools</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SachBol AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

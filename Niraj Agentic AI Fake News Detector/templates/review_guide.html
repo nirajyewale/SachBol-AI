@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Guide - SachBol AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/human_review.css') }}">
+    <style>
+        .guide-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .guide-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .guide-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .guide-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .guide-section h2 {
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+        
+        .guide-subsection {
+            margin-bottom: 2rem;
+        }
+        
+        .guide-subsection h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .guide-checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .guide-checklist li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .guide-checklist li:last-child {
+            border-bottom: none;
+        }
+        
+        .check-icon {
+            color: var(--success);
+            font-size: 1.1rem;
+            margin-top: 0.2rem;
+        }
+        
+        .severity-levels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .severity-card {
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        
+        .severity-high {
+            border-left-color: var(--danger);
+            background: rgba(230, 57, 70, 0.1);
+        }
+        
+        .severity-medium {
+            border-left-color: var(--warning);
+            background: rgba(247, 37, 133, 0.1);
+        }
+        
+        .severity-low {
+            border-left-color: var(--success);
+            background: rgba(76, 201, 240, 0.1);
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .action-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .action-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>SachBol AI</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="/human-review"><i class="fas fa-user-check"></i> Human Review</a></li>
+                <li><a href="/analysis"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="/analysis/claims"><i class="fas fa-list"></i> All Claims</a></li>
+                <li><a href="/"><i class="fas fa-arrow-left"></i> Back to Home</a></li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h2>Complete Review Guidelines</h2>
+            </div>
+
+            <!-- Hero Section -->
+            <div class="guide-hero">
+                <h1><i class="fas fa-book-open"></i> SachBol Review Guide</h1>
+                <p>Comprehensive guidelines for effective misinformation detection and crisis response</p>
+            </div>
+
+            <!-- Source Verification Section -->
+            <div class="guide-section">
+                <h2><i class="fas fa-search"></i> Source Verification Protocol</h2>
+                
+                <div class="guide-subsection">
+                    <h3>Primary Source Checklist</h3>
+                    <ul class="guide-checklist">
+                        <li>
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <div>
+                                <strong>Official Statements:</strong> Government agencies, health organizations (WHO, CDC), emergency services
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <div>
+                                <strong>Reputable News:</strong> Associated Press, Reuters, established news networks with fact-checking departments
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <div>
+                                <strong>Academic Sources:</strong> Peer-reviewed journals, university research, scientific publications
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <div>
+                                <strong>Cross-Reference:</strong> Verify across at least 3 independent reliable sources
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="guide-subsection">
+                    <h3>Red Flags for Unreliable Sources</h3>
+                    <ul class="guide-checklist">
+                        <li>
+                            <i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i>
+                            <div>No author attribution or anonymous sources</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i>
+                            <div>Extreme emotional language or sensational headlines</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i>
+                            <div>Lack of publication date or recent updates</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i>
+                            <div>No contact information or about page</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Crisis Response Section -->
+            <div class="guide-section">
+                <h2><i class="fas fa-exclamation-triangle"></i> Crisis Response Protocol</h2>
+                
+                <div class="guide-subsection">
+                    <h3>Immediate Action Steps</h3>
+                    <ul class="guide-checklist">
+                        <li>
+                            <i class="fas fa-bolt check-icon"></i>
+                            <div>
+                                <strong>Priority Escalation:</strong> Crisis claims jump to front of review queue automatically
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-bolt check-icon"></i>
+                            <div>
+                                <strong>Time Limit:</strong> All crisis claims must be reviewed within 30 minutes
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-bolt check-icon"></i>
+                            <div>
+                                <strong>Coordination:</strong> Notify crisis response team for high-severity misinformation
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-bolt check-icon"></i>
+                            <div>
+                                <strong>Template Responses:</strong> Use pre-approved correction templates for common crisis misinformation
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="guide-subsection">
+                    <h3>Crisis Severity Levels</h3>
+                    <div class="severity-levels">
+                        <div class="severity-card severity-high">
+                            <h4>HIGH SEVERITY</h4>
+                            <p>Claims that could cause immediate harm, panic, or interfere with emergency response</p>
+                            <ul>
+                                <li>False evacuation orders</li>
+                                <li>Fake health treatments</li>
+                                <li>Misleading casualty numbers</li>
+                            </ul>
+                        </div>
+                        <div class="severity-card severity-medium">
+                            <h4>MEDIUM SEVERITY</h4>
+                            <p>Misleading information that could cause confusion or unnecessary fear</p>
+                            <ul>
+                                <li>Exaggerated threats</li>
+                                <li>Outdated information</li>
+                                <li>Misattributed quotes</li>
+                            </ul>
+                        </div>
+                        <div class="severity-card severity-low">
+                            <h4>LOW SEVERITY</h4>
+                            <p>Minor inaccuracies or opinion-based statements</p>
+                            <ul>
+                                <li>Speculative analysis</li>
+                                <li>Editorial content</li>
+                                <li>Personal opinions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decision Making Section -->
+            <div class="guide-section">
+                <h2><i class="fas fa-balance-scale"></i> Decision Making Framework</h2>
+                
+                <div class="guide-subsection">
+                    <h3>Verification Confidence Levels</h3>
+                    <ul class="guide-checklist">
+                        <li>
+                            <i class="fas fa-certificate" style="color: var(--success);"></i>
+                            <div>
+                                <strong>High Confidence (Verified):</strong> Multiple reliable sources confirm, official statements support
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i>
+                            <div>
+                                <strong>Medium Confidence (Partially True):</strong> Some evidence supports, but details may be exaggerated
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-times-circle" style="color: var(--danger);"></i>
+                            <div>
+                                <strong>Low Confidence (False):</strong> Contradicted by reliable sources, lacks evidence, known misinformation pattern
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="guide-subsection">
+                    <h3>Documentation Requirements</h3>
+                    <ul class="guide-checklist">
+                        <li>
+                            <i class="fas fa-file-alt check-icon"></i>
+                            <div>Brief reasoning note for all disputed AI assessments</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-file-alt check-icon"></i>
+                            <div>List of sources consulted during verification</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-file-alt check-icon"></i>
+                            <div>Timestamp and reviewer identification</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-file-alt check-icon"></i>
+                            <div>Any additional context or mitigating factors</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <div class="action-card" onclick="window.location.href='/human-review'">
+                    <div class="action-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <h4>Start Reviewing</h4>
+                    <p>Return to active review queue</p>
+                </div>
+                <div class="action-card" onclick="window.location.href='/analysis/claims'">
+                    <div class="action-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <h4>View All Claims</h4>
+                    <p>Browse complete claims database</p>
+                </div>
+                <div class="action-card" onclick="window.print()">
+                    <div class="action-icon">
+                        <i class="fas fa-print"></i>
+                    </div>
+                    <h4>Print Guide</h4>
+                    <p>Physical copy for reference</p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p>SachBol AI &copy; 2025 | Comprehensive Review Guidelines v2.1</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

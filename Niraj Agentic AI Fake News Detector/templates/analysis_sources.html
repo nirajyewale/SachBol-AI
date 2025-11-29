@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sources Analysis - SachBol AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/analysis.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>SachBol AI</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="/human-review"><i class="fas fa-user-check"></i> Human Review</a></li>
+                <li><a href="/analysis"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="/analysis/details"><i class="fas fa-chart-bar"></i> Detailed Analysis</a></li>
+                <li><a href="/analysis/claims"><i class="fas fa-list"></i> All Claims</a></li>
+                <li><a href="/analysis/insights"><i class="fas fa-lightbulb"></i> All Insights</a></li>
+                <li><a href="/analysis/sources" class="active"><i class="fas fa-newspaper"></i> Sources Analysis</a></li>
+                <li><a href="/"><i class="fas fa-arrow-left"></i> Back to Home</a></li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h2>Sources Analysis</h2>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="time-period">Time Period</label>
+                        <select id="time-period">
+                            <option value="7d">Last 7 days</option>
+                            <option value="30d" selected>Last 30 days</option>
+                            <option value="90d">Last 90 days</option>
+                            <option value="1y">Last year</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="source-type">Source Type</label>
+                        <select id="source-type">
+                            <option value="all">All Sources</option>
+                            <option value="social_media">Social Media</option>
+                            <option value="news_sites">News Sites</option>
+                            <option value="blogs">Blogs</option>
+                            <option value="forums">Forums</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" id="applyFilters">Apply Filters</button>
+                    <button class="btn btn-outline" id="exportSources">Export Report</button>
+                </div>
+            </div>
+
+            <!-- Sources Content -->
+            <div class="content-grid">
+                <!-- Charts -->
+                <div class="chart-container">
+                    <div class="section-header">
+                        <h3>Misinformation by Source Type</h3>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="sourcesChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="section-header">
+                        <h3>False Claims Rate by Platform</h3>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="platformsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Source Statistics -->
+                <div class="data-container" style="grid-column: 1 / -1;">
+                    <div class="section-header">
+                        <h3>Source Performance Metrics</h3>
+                    </div>
+                    <div class="sources-stats" id="sourcesStats">
+                        <!-- Source stats will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Detailed Source Analysis -->
+                <div class="data-container" style="grid-column: 1 / -1;">
+                    <div class="section-header">
+                        <h3>Detailed Source Analysis</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Source Type</th>
+                                    <th>Total Claims</th>
+                                    <th>False Claims</th>
+                                    <th>Verified Claims</th>
+                                    <th>False Rate</th>
+                                    <th>Avg Confidence</th>
+                                    <th>Trend</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sourcesTable">
+                                <!-- Sources data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="footer">
+                <p>SachBol AI &copy; 2025 | Real-time Misinformation Detection System</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/analysis_sources.js') }}"></script>
+</body>
+</html>

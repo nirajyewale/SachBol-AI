@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crisis Dashboard - SachBol AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/human_review.css') }}">
+    <style>
+        .crisis-hero {
+            background: linear-gradient(135deg, #e63946 0%, #d00000 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .crisis-hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .crisis-hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .active-crises {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .crisis-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid;
+        }
+        
+        .crisis-health {
+            border-left-color: #e63946;
+        }
+        
+        .crisis-disaster {
+            border-left-color: #f72585;
+        }
+        
+        .crisis-conflict {
+            border-left-color: #ff9e00;
+        }
+        
+        .crisis-environment {
+            border-left-color: #4cc9f0;
+        }
+        
+        .crisis-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .crisis-type {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .type-health { background: #e63946; }
+        .type-disaster { background: #f72585; }
+        .type-conflict { background: #ff9e00; }
+        .type-environment { background: #4cc9f0; }
+        
+        .crisis-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .metric {
+            text-align: center;
+            padding: 0.75rem;
+            background: var(--light);
+            border-radius: 8px;
+        }
+        
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .alerts-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .alert-item {
+            padding: 1rem;
+            border-left: 4px solid var(--danger);
+            background: rgba(230, 57, 70, 0.05);
+            margin-bottom: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .alert-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .alert-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .response-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .response-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .response-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .timeline {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+        
+        .timeline-marker {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            margin-top: 0.5rem;
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .emergency-btn {
+            background: linear-gradient(135deg, #e63946 0%, #d00000 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .emergency-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>TruthGuard AI</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="/human-review"><i class="fas fa-user-check"></i> Human Review</a></li>
+                <li><a href="/crisis-dashboard" class="active"><i class="fas fa-exclamation-triangle"></i> Crisis Dashboard</a></li>
+                <li><a href="/analysis"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="/"><i class="fas fa-arrow-left"></i> Back to Home</a></li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h2>Crisis Response Dashboard</h2>
+            </div>
+
+            <!-- Crisis Hero -->
+            <div class="crisis-hero">
+                <h1><i class="fas fa-exclamation-triangle"></i> Active Crisis Monitoring</h1>
+                <p>Real-time tracking of misinformation during emergency situations</p>
+            </div>
+
+            <!-- Active Crises Grid -->
+            <div class="active-crises">
+                <div class="crisis-card crisis-health">
+                    <div class="crisis-header">
+                        <h3>Health Emergency</h3>
+                        <span class="crisis-type type-health">ACTIVE</span>
+                    </div>
+                    <p>New COVID-19 variant misinformation spreading across social media platforms</p>
+                    <div class="crisis-metrics">
+                        <div class="metric">
+                            <div class="metric-value">47</div>
+                            <div class="metric-label">False Claims</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">125K</div>
+                            <div class="metric-label">Estimated Reach</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">28m</div>
+                            <div class="metric-label">Avg Response</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">92%</div>
+                            <div class="metric-label">Accuracy</div>
+                        </div>
+                    </div>
+                    <div class="alert-actions">
+                        <button class="btn btn-primary">View Details</button>
+                        <button class="btn btn-outline">Coordinate with WHO</button>
+                    </div>
+                </div>
+
+                <div class="crisis-card crisis-disaster">
+                    <div class="crisis-header">
+                        <h3>Natural Disaster</h3>
+                        <span class="crisis-type type-disaster">MONITORING</span>
+                    </div>
+                    <p>False evacuation orders and exaggerated damage reports in affected regions</p>
+                    <div class="crisis-metrics">
+                        <div class="metric">
+                            <div class="metric-value">23</div>
+                            <div class="metric-label">False Claims</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">58K</div>
+                            <div class="metric-label">Estimated Reach</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">15m</div>
+                            <div class="metric-label">Avg Response</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">88%</div>
+                            <div class="metric-label">Accuracy</div>
+                        </div>
+                    </div>
+                    <div class="alert-actions">
+                        <button class="btn btn-primary">View Details</button>
+                        <button class="btn btn-outline">Emergency Services</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- High Priority Alerts -->
+            <div class="alerts-container">
+                <div class="section-header">
+                    <h3>High Priority Alerts</h3>
+                    <span class="status-badge status-false">3 ACTIVE</span>
+                </div>
+                
+                <div class="alert-item">
+                    <div class="alert-header">
+                        <strong>False Vaccine Claims</strong>
+                        <span style="color: var(--danger); font-size: 0.8rem;">HIGH RISK</span>
+                    </div>
+                    <p>"New COVID variant completely resistant to all existing vaccines" - Spreading on Twitter and Facebook</p>
+                    <div class="alert-actions">
+                        <button class="btn btn-primary">Issue Correction</button>
+                        <button class="btn btn-outline">View Sources</button>
+                        <button class="btn btn-outline">Escalate</button>
+                    </div>
+                </div>
+                
+                <div class="alert-item">
+                    <div class="alert-header">
+                        <strong>Fake Evacuation Orders</strong>
+                        <span style="color: var(--danger); font-size: 0.8rem;">HIGH RISK</span>
+                    </div>
+                    <p>False emergency broadcast circulating in disaster-affected areas causing panic</p>
+                    <div class="alert-actions">
+                        <button class="btn btn-primary">Issue Correction</button>
+                        <button class="btn btn-outline">Coordinate with Authorities</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Response Actions -->
+            <div class="response-grid">
+                <div class="response-card">
+                    <div class="response-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h4>Public Corrections</h4>
+                    <p>Issue immediate corrections for high-risk misinformation</p>
+                    <button class="btn btn-primary" style="margin-top: 1rem;">Create Alert</button>
+                </div>
+                
+                <div class="response-card">
+                    <div class="response-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Partner Coordination</h4>
+                    <p>Coordinate with official agencies and fact-checking partners</p>
+                    <button class="btn btn-outline" style="margin-top: 1rem;">Contact Partners</button>
+                </div>
+                
+                <div class="response-card">
+                    <div class="response-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Trend Analysis</h4>
+                    <p>Monitor misinformation spread patterns and emerging threats</p>
+                    <button class="btn btn-outline" style="margin-top: 1rem;">View Analytics</button>
+                </div>
+            </div>
+
+            <!-- Response Timeline -->
+            <div class="timeline">
+                <div class="section-header">
+                    <h3>Recent Response Actions</h3>
+                    <span style="color: var(--gray); font-size: 0.8rem;">Last 24 hours</span>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <strong>Correction Issued</strong>
+                        <p>False vaccine efficacy claim corrected across 3 platforms</p>
+                        <span style="color: var(--gray); font-size: 0.8rem;">15 minutes ago</span>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <strong>Partner Alert</strong>
+                        <p>Notified WHO about emerging health misinformation pattern</p>
+                        <span style="color: var(--gray); font-size: 0.8rem;">1 hour ago</span>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <strong>Crisis Team Activated</strong>
+                        <p>Emergency response protocol initiated for health misinformation</p>
+                        <span style="color: var(--gray); font-size: 0.8rem;">2 hours ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emergency Action Button -->
+            <div style="text-align: center;">
+                <button class="emergency-btn">
+                    <i class="fas fa-bell"></i>
+                    ACTIVATE EMERGENCY RESPONSE
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p>TruthGuard AI &copy; 2025 | Crisis Response Dashboard - Emergency Protocol Active</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-refresh crisis data every 30 seconds
+        setInterval(() => {
+            console.log('Refreshing crisis data...');
+            // In real implementation, this would fetch updated data from the API
+        }, 30000);
+
+        // Emergency button functionality
+        document.querySelector('.emergency-btn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to activate emergency response protocol? This will notify all team members and escalate to senior leadership.')) {
+                alert('🚨 EMERGENCY RESPONSE ACTIVATED! All team members have been notified.');
+                // In real implementation, this would trigger notifications and escalate
+            }
+        });
+    </script>
+</body>
+</html>
